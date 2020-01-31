@@ -1,4 +1,5 @@
 import Pkg; Pkg.activate(@__DIR__); Pkg.instantiate()
+pkg"precompile"
 
 # # Express path to classifying images
 #
