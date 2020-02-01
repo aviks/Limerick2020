@@ -55,12 +55,12 @@ layer2(layer1(xs[1]))
 #-
 
 #nb ?Chain
-#jl @doc Chain
+@doc Chain
 
 #-
 
-m = Chain(layer1, layer2)
-m(xs[1])
+model = Chain(layer1, layer2)
+model(xs[1])
 
 #-
 
@@ -68,7 +68,6 @@ xs[1] |> layer1 |> layer2
 
 # ### The core algorithm from the last lecture
 
-model = Chain(Dense(2, 3, σ)) # Update this!
 L(x,y) = Flux.mse(model(x), y)
 opt = Descent()
 Flux.train!(L, params(model), zip(xs, ys), opt)
@@ -76,24 +75,24 @@ Flux.train!(L, params(model), zip(xs, ys), opt)
 #-
 
 ## Recall his is how we repeatedly walked down our gradient previously...
-for _ in 1:1000
+for _ in 1:10
     Flux.train!(L, zip(xs, ys), opt)
 end
 ## But our model is now more complicated and this will take more time!
 
 #-
 
-data = zip(xs, ys)
-@time Flux.train!(L, data, opt)
-@time Flux.train!(L, data, opt)
+dat = zip(xs, ys)
+@time Flux.train!(L, dat, opt)
+@time Flux.train!(L, dat, opt)
 
 # ### Improving efficiency by batching
 
-length(data)
+length(dat)
 
 #-
 
-first(data)
+first(dat)
 
 # Recall our matrix-vector multiplication from the previous lecture:
 
@@ -120,7 +119,7 @@ databatch = (Flux.batch(xs), Flux.batch(ys))
 
 #-
 
-Flux.train!(L, Iterators.repeated(databatch, 10000), opt)
+Flux.train!(L, Iterators.repeated(databatch, 1000), opt)
 
 #-
 
