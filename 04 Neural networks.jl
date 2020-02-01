@@ -1,6 +1,5 @@
-import Pkg; Pkg.activate(@__DIR__); Pkg.instantiate()
+#import Pkg; Pkg.activate(@__DIR__); Pkg.instantiate()
 
-# <br /><br />
 #
 # ## Neural networks
 #
@@ -40,14 +39,14 @@ W*x
 
 using CSV, DataFrames, Flux, Plots
 ## Load apple data in CSV.read for each file
-apples1 = DataFrame(CSV.File(datapath("data/Apple_Golden_1.dat"), delim='\t', allowmissing=:none, normalizenames=true))
-apples2 = DataFrame(CSV.File(datapath("data/Apple_Golden_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
-apples3 = DataFrame(CSV.File(datapath("data/Apple_Golden_3.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+apples1 = DataFrame(CSV.File("data/Apple_Golden_1.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples2 = DataFrame(CSV.File("data/Apple_Golden_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
+apples3 = DataFrame(CSV.File("data/Apple_Golden_3.dat", delim='\t', allowmissing=:none, normalizenames=true))
 ## And then concatenate them all together
 apples = vcat(apples1, apples2, apples3)
-bananas = DataFrame(CSV.File(datapath("data/Banana.dat"), delim='\t', allowmissing=:none, normalizenames=true))
-grapes1 = DataFrame(CSV.File(datapath("data/Grape_White.dat"), delim='\t', allowmissing=:none, normalizenames=true))
-grapes2 = DataFrame(CSV.File(datapath("data/Grape_White_2.dat"), delim='\t', allowmissing=:none, normalizenames=true))
+bananas = DataFrame(CSV.File("data/Banana.dat", delim='\t', allowmissing=:none, normalizenames=true))
+grapes1 = DataFrame(CSV.File("data/Grape_White.dat", delim='\t', allowmissing=:none, normalizenames=true))
+grapes2 = DataFrame(CSV.File("data/Grape_White_2.dat", delim='\t', allowmissing=:none, normalizenames=true))
 grapes = vcat(grapes1, grapes2)
 
 #-
@@ -81,10 +80,10 @@ ys = vcat(fill(onehot(1, 1:3), size(x_apples)),
 
 # ## The core algorithm from the previous lecture
 
-## model = Dense(2, 1, σ)
-## L(x,y) = Flux.mse(model(x), y)
-## opt = SGD(params(model))
-## Flux.train!(L, zip(xs, ys), opt)
+model = Dense(2, 3, σ)
+L(x,y) = Flux.mse(model(x), y)
+opt = SGD(params(model))
+Flux.train!(L, zip(xs, ys), opt)
 
 # ### Visualization
 
