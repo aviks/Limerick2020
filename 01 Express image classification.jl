@@ -1,4 +1,6 @@
-import Pkg; Pkg.activate(@__DIR__); Pkg.instantiate()
+cd(@__DIR__)
+import Pkg; Pkg.activate(@__DIR__);
+Pkg.instantiate()
 pkg"precompile"
 
 # # Express path to classifying images
@@ -28,10 +30,6 @@ vgg = VGG19()
 
 # To classify the image using the model, we just run the following command, and
 # it returns its best guess at a classification:
-
-# This patches up an old function definition that's out of sync from the downloaded model:
-# This will be fixed soon...
-@eval Metalhead.Flux.NNlib maxpool(x, dims::Tuple;kws...) = maxpool(x, PoolDims(x,(2,2); kws...))
 
 classify(vgg, image)
 
@@ -71,7 +69,7 @@ probs = Metalhead.forward(vgg, image)
 # We can now see which are the most likely few labels:
 
 perm = sortperm(probs)
-probs[273]
+probs[250]
 
 #-
 
